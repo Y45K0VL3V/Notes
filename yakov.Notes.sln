@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "yakov.Notes", "yakov.Notes\yakov.Notes.csproj", "{21263D2E-1555-4C88-ACD9-FD10D5385DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yakov.Notes.Services", "yakov.Notes.Services\yakov.Notes.Services.csproj", "{2ED00D98-345B-4A76-B2AF-61BE1C19309D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yakov.Notes.Domain", "yakov.Notes.Domain\yakov.Notes.Domain.csproj", "{54C15BED-B628-4246-A647-68E694CC91D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{21263D2E-1555-4C88-ACD9-FD10D5385DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21263D2E-1555-4C88-ACD9-FD10D5385DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{21263D2E-1555-4C88-ACD9-FD10D5385DCB}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2ED00D98-345B-4A76-B2AF-61BE1C19309D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED00D98-345B-4A76-B2AF-61BE1C19309D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED00D98-345B-4A76-B2AF-61BE1C19309D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED00D98-345B-4A76-B2AF-61BE1C19309D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C15BED-B628-4246-A647-68E694CC91D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C15BED-B628-4246-A647-68E694CC91D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C15BED-B628-4246-A647-68E694CC91D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C15BED-B628-4246-A647-68E694CC91D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

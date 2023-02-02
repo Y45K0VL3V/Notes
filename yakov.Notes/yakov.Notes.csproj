@@ -53,4 +53,9 @@
 	  <PackageReference Include="Sharpnado.CollectionView.Maui" Version="3.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\yakov.Notes.Domain\yakov.Notes.Domain.csproj" />
+	  <ProjectReference Include="..\yakov.Notes.Services\yakov.Notes.Services.csproj" />
+	</ItemGroup>
+
 </Project>
