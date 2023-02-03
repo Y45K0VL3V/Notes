@@ -58,4 +58,8 @@
 	  <ProjectReference Include="..\yakov.Notes.Services\yakov.Notes.Services.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Resources\Styles\Components\" />
+	</ItemGroup>
+
 </Project>

@@ -9,6 +9,7 @@ namespace yakov.Notes.Domain.Entities
     public class Note
     {
         public int Id { get; set; }
+        public Guid Guid { get; set; } = new Guid();
         public string Title { get; set; }
         public string Content { get; set; }
         public DateTime CreatedTime { get; set; }
