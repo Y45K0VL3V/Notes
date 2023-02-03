@@ -10,4 +10,8 @@
     <ProjectReference Include="..\yakov.Notes.Domain\yakov.Notes.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.2" />
+  </ItemGroup>
+
 </Project>
