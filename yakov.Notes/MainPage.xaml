@@ -1,10 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:yakov.Notes.ViewModel"
+             xmlns:sho="http://sharpnado.com"
+             xmlns:models="clr-namespace:yakov.Notes.Domain.Entities;assembly=yakov.Notes.Domain"
+             x:DataType="vm:MainPageVM"
              x:Class="yakov.Notes.MainPage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="True"
+             Background="Black">
+
     <ScrollView>
-        
+        <sho:CollectionView x:Name="CollectionView"
+                            CollectionPadding="0,20,0,50"
+                            ItemSpacing="25"
+                            CurrentIndex="{Binding CurrentIndex}"
+                            EnableDragAndDrop="True"
+                            ItemHeight="210"
+                            ItemWidth="96"
+                            ItemsSource="{Binding NoteItems}"
+                            CollectionLayout="Grid"
+                            Background="Transparent">
+
+            <sho:CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Note">
+                    <sho:DraggableViewCell x:Name="DraggableViewCell">
+                        <Grid Margin="0,0,0,100">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="135"/>
+                                <RowDefinition Height="75"/>
+                            </Grid.RowDefinitions>
+                            <Border Background="#171717"
+                                    Padding="10,0,15,0"
+                                    HeightRequest="135"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Grid>
+                                    <Editor Text="{Binding Content}" TextColor="White"
+                                            IsReadOnly="True" 
+                                            IsSpellCheckEnabled="false"
+                                            VerticalOptions="Fill"
+                                            VerticalTextAlignment="End"
+                                            HorizontalOptions="Fill" AutoSize="TextChanges"/>
+                                </Grid>
+                            </Border>
+
+                            <StackLayout Grid.Row="1"
+                                         Background="Transparent"
+                                         Margin="0,5,0,0">
+                                <Label Text="{Binding Title}"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="White"
+                                       FontAttributes="Bold"
+                                       MaxLines="2">
+                                </Label>
+                                <Label Text="{Binding LastTimeModified}"
+                                       HorizontalTextAlignment="Center"
+                                       TextColor="#AEAEAE"
+                                       FontSize="12"
+                                       MaxLines="1"/>
+                            </StackLayout>
+
+                        </Grid>
+                    </sho:DraggableViewCell>
+                </DataTemplate>
+            </sho:CollectionView.ItemTemplate>
+
+        </sho:CollectionView>
     </ScrollView>
 
 </ContentPage>
