@@ -48,7 +48,7 @@ namespace yakov.Notes.Services.LocalDB
             return noteToUpdate;
         }
 
-        public async Task<List<Note>> SearchNotes(string searchStr)
+        public async Task<List<Note>> GetNotes(string searchStr)
         {
             List<Note> notes = new();
 
@@ -59,7 +59,7 @@ namespace yakov.Notes.Services.LocalDB
                 notes.AddRange(_context.Notes.Where(n => n.Content.Contains(searchStr)));
             });
 
-            return notes;
+            return notes.DistinctBy(n => n.Guid).ToList();
         }
 
     }

@@ -10,7 +10,7 @@ namespace yakov.Notes.Domain.Interfaces
         
         public Task DeleteNote(Guid noteGuid);
 
-        public Task<List<Note>> SearchNotes(string searchStr);
+        public Task<List<Note>> GetNotes(string searchStr);
 
     }
 }
