@@ -6,7 +6,8 @@
              xmlns:models="clr-namespace:yakov.Notes.Domain.Entities;assembly=yakov.Notes.Domain"
              x:DataType="vm:MainPageVM"
              x:Class="yakov.Notes.MainPage"
-             Shell.NavBarIsVisible="True"
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False"
              Background="Black">
 
     <ScrollView>
