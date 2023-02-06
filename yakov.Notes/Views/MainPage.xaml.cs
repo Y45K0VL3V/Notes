@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using yakov.Notes.ViewModel;
 
-namespace yakov.Notes;
+namespace yakov.Notes.Views;
 
 public partial class MainPage : ContentPage
 {

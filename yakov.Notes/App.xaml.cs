@@ -1,11 +1,13 @@
-﻿namespace yakov.Notes;
+﻿using yakov.Notes.Views;
+
+namespace yakov.Notes;
 
 public partial class App : Application
 {
-	public App()
+	public App(LoginPage startPage)
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+		MainPage = new NavigationPage(startPage);
 	}
 }
