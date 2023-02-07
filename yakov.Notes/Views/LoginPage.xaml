@@ -4,68 +4,70 @@
              x:Class="yakov.Notes.Views.LoginPage"
              NavigationPage.HasNavigationBar="False"
              Title="LoginPage">
-    <Grid BackgroundColor="Transparent"
-          HorizontalOptions="FillAndExpand"
-          VerticalOptions="FillAndExpand">
+    <ScrollView>
+        <Grid BackgroundColor="Black"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <Label Grid.Row="0"
-               FontAttributes="Bold"
-               FontSize="24"
-               Margin="0,30,0,0"
-               HorizontalOptions="CenterAndExpand"
-               Text="Welcome Back!"
-               TextColor="White" />
+            <Label Grid.Row="0"
+                   FontAttributes="Bold"
+                   FontSize="24"
+                   Margin="0,30,0,0"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Welcome Back!"
+                   TextColor="White" />
 
-        <Frame Grid.Row="1"
-               Margin="15,40"
-               BorderColor="Transparent"
-               Background="#171717"
-               CornerRadius="50"
-               HasShadow="True"
-               HeightRequest="175">
-            <Grid Padding="15,20"
-                  HorizontalOptions="FillAndExpand"
-                  RowSpacing="20"
-                  VerticalOptions="FillAndExpand">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Frame Grid.Row="1"
+                   Margin="15,40"
+                   BorderColor="Transparent"
+                   Background="#171717"
+                   CornerRadius="50"
+                   HasShadow="True"
+                   HeightRequest="175">
+                <Grid Padding="15,20"
+                      HorizontalOptions="FillAndExpand"
+                      RowSpacing="20"
+                      VerticalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                 
-                <Entry Grid.Row="0"
-                       Margin="0,0,0,0"
-                       HorizontalOptions="FillAndExpand"
-                       Placeholder="Username"
-                       Text="{Binding UserName}"
-                       VerticalOptions="FillAndExpand"/>
-                <Entry Grid.Row="1"
-                       HorizontalOptions="FillAndExpand"
-                       IsPassword="True"
-                       Placeholder="Password"
-                       Text="{Binding UserPassword}"
-                       VerticalOptions="FillAndExpand" />
-            </Grid>
+                    <Entry Grid.Row="0"
+                           Margin="0,0,0,0"
+                           HorizontalOptions="FillAndExpand"
+                           Placeholder="Email"
+                           Text="{Binding UserEmail}"
+                           VerticalOptions="FillAndExpand"/>
+                    <Entry Grid.Row="1"
+                           HorizontalOptions="FillAndExpand"
+                           IsPassword="True"
+                           Placeholder="Password"
+                           Text="{Binding UserPassword}"
+                           VerticalOptions="FillAndExpand" />
+                </Grid>
             
-        </Frame>
+            </Frame>
         
-        <Button Grid.Row="3"
-                Margin="15,20,15,0"
-                Command="{Binding LoginBtn}"
-                CornerRadius="20"
-                Text="Sign in" />
+            <Button Grid.Row="3"
+                    Margin="15,20,15,0"
+                    Command="{Binding SignInCommand}"
+                    CornerRadius="20"
+                    Text="Sign in" />
 
-        <Button Grid.Row="4"
-                Margin="15,20,15,0"
-                Command="{Binding RegisterBtn}"
-                CornerRadius="20"
-                Text="Sign up with email" />
-    </Grid>
+            <Button Grid.Row="4"
+                    Margin="15,20,15,30"
+                    Command="{Binding SignUpCommand}"
+                    CornerRadius="20"
+                    Text="Sign up with email" />
+        </Grid>
+    </ScrollView>
 </ContentPage>
