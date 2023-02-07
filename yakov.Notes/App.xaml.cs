@@ -8,6 +8,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new NavigationPage(startPage);
+		Current.MainPage = new NavigationPage(startPage);
 	}
 }

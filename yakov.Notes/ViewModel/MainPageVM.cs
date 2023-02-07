@@ -8,12 +8,12 @@ namespace yakov.Notes.ViewModel
     {
         public MainPageVM()
         {
-            //NoteItems.Add(new() { Title = "Title text", Content = "Some text here SAGSG SADGSDF GSGS GSDF GS GSD GSA SADG ADF ASD GG SDGSDSADG DS GASGDGSADGDSAG ASDGASDSDAG WGRG WGF SFDGSFDG FDGSDF"});
-            //NoteItems.Add(new() { Title = "Title text", Content = "Some text here"});
-            //NoteItems.Add(new() { Title = "Title text", Content = "Some text here"});
-            //NoteItems.Add(new() { Title = "Title text", Content = "Some text here"});
-            //NoteItems.Add(new() { Title = "Title text", Content = "Some text here"});
-            //NoteItems.Add(new() { Title = "Title text", Content = "Some text here"});
+            NoteItems.Add(new() { Title = "Title text", Content = "Some text here SAGSG SADGSDF GSGS GSDF GS GSD GSA SADG ADF ASD GG SDGSDSADG DS GASGDGSADGDSAG ASDGASDSDAG WGRG WGF SFDGSFDG FDGSDF" });
+            NoteItems.Add(new() { Title = "Title text", Content = "Some text here" });
+            NoteItems.Add(new() { Title = "Title text", Content = "Some text here" });
+            NoteItems.Add(new() { Title = "Title text", Content = "Some text here" });
+            NoteItems.Add(new() { Title = "Title text", Content = "Some text here" });
+            NoteItems.Add(new() { Title = "Title text", Content = "Some text here" });
         }
 
         [ObservableProperty]

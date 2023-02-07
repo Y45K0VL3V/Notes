@@ -29,18 +29,14 @@
                    Margin="15,40"
                    BorderColor="Transparent"
                    Background="#171717"
-                   CornerRadius="50"
+                   CornerRadius="20"
                    HasShadow="True"
-                   HeightRequest="175">
-                <Grid Padding="15,20"
-                      HorizontalOptions="FillAndExpand"
-                      RowSpacing="20"
-                      VerticalOptions="FillAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
+                   HeightRequest="150">
+                <FlexLayout HorizontalOptions="FillAndExpand"
+                            VerticalOptions="FillAndExpand"
+                            JustifyContent="SpaceBetween"
+                            Direction="Column"
+                            Margin="10,10">
                     <Entry Grid.Row="0"
                            Margin="0,0,0,0"
                            HorizontalOptions="FillAndExpand"
@@ -53,7 +49,7 @@
                            Placeholder="Password"
                            Text="{Binding UserPassword}"
                            VerticalOptions="FillAndExpand" />
-                </Grid>
+                </FlexLayout>
 
             </Frame>
 
@@ -61,7 +57,7 @@
                     Margin="15,20,15,30"
                     Command="{Binding SignUpCommand}"
                     CornerRadius="20"
-                    Text="Sign up with email" />
+                    Text="Sign up" />
         </Grid>
     </ScrollView>
 

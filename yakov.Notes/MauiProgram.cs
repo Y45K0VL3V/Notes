@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sharpnado.CollectionView;
 using yakov.Notes.Domain.Interfaces;
+using yakov.Notes.Navigation;
 using yakov.Notes.Services;
 using yakov.Notes.ViewModel;
 using yakov.Notes.Views;
@@ -29,7 +30,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<MainPageVM>();
 
 		builder.Services.AddSingleton<IAuthService, FirebaseAuthService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
 
-		return builder.Build();
+        return builder.Build();
 	}
 }
