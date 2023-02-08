@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:yakov.Notes.Resources.Styles.Converters"
+             x:Class="yakov.Notes.Views.NoteEditorPage"
+             Title="NoteEditorPage"
+             NavigationPage.HasNavigationBar="False"
+             Background="Black">
+    <ContentPage.Resources>
+        <converters:BoolToToggleBackgroundConverter x:Key="BoolToBackground"/>
+    </ContentPage.Resources>
+    
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{StaticResource FrameBrush}"
+                StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="5"/>
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Entry VerticalOptions="Center"
+                       HorizontalOptions="FillAndExpand"
+                       Grid.Row="0" Grid.Column="0"
+                       Text="{Binding Path=NoteTitle, Mode=TwoWay}"
+                       FontSize="22"
+                       Background="Transparent"
+                       TextColor="White"
+                       Margin="10,5" 
+                       MaxLength="100"
+                       Placeholder="Title here"/>
+
+                <Button Grid.Column="1" Grid.RowSpan="2"
+                        Margin="5,0,15,0"
+                        Background="{Binding IsShared, Converter={StaticResource BoolToBackground}}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        HeightRequest="50"
+                        WidthRequest="50"
+                        ImageSource="share_button.svg"
+                        Command="SwitchShareModeCommand"/>
+
+                <Label Text="{Binding Path=CreatedTime, TargetNullValue=19:58}"
+                       TextColor="#AEAEAE"
+                       Grid.Row="1" Grid.Column="0"/>
+
+            </Grid>
+        </Border>
+        
+        <Border Grid.Row="1"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Background="{StaticResource FrameBrush}"
+                Margin="0,20,0,0"
+                StrokeThickness="0">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="5"/>
+            </Border.StrokeShape>
+            
+            <Editor VerticalOptions="Fill"
+                    HorizontalOptions="Fill" AutoSize="TextChanges"
+                    Text="{Binding Path=NoteContent, Mode=TwoWay}"
+                    FontSize="18"
+                    Placeholder="Type the note here "
+                    TextColor="White"
+                    Margin="15,20"/>
+        </Border>
+
+        <Button Grid.Row="2"
+                Text="Save 'n close"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Margin="0,20,0,0"
+                Command="{Binding SaveNoteCommand}"/>
+
+    </Grid>
+</ContentPage>

@@ -49,8 +49,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\note_add_button.png" />
+	  <None Remove="Resources\Images\share_button.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 	  <PackageReference Include="Sharpnado.CollectionView.Maui" Version="3.0.0" />
+	  <PackageReference Include="Sharpnado.Tabs.Maui" Version="3.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -64,6 +70,9 @@
 
 	<ItemGroup>
 	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\NoteEditorPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\RegisterPage.xaml">

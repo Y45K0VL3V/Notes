@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sharpnado.CollectionView;
+using Sharpnado.Tabs;
 using yakov.Notes.Domain.Interfaces;
 using yakov.Notes.Navigation;
 using yakov.Notes.Services;
@@ -16,6 +17,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
             .UseSharpnadoCollectionView(loggerEnable: false)
+			.UseSharpnadoTabs(loggerEnable: false)
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -28,6 +30,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<RegisterPageVM>();
 		builder.Services.AddTransient<MainPage>();
 		builder.Services.AddTransient<MainPageVM>();
+		builder.Services.AddTransient<NoteEditorPage>();
+		builder.Services.AddTransient<NoteEditorPageVM>();
 
 		builder.Services.AddSingleton<IAuthService, FirebaseAuthService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();

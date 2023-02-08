@@ -8,7 +8,6 @@
              x:DataType="vm:MainPageVM"
              x:Class="yakov.Notes.Views.MainPage"
              NavigationPage.HasNavigationBar="False"
-             Shell.NavBarIsVisible="False"
              Background="Black">
 
     <ContentPage.Resources>
@@ -120,7 +119,7 @@
                 HeightRequest="50"
                 WidthRequest="50"
                 ImageSource="note_add_button.svg"
-                Command="{Binding OpenNoteEditorCommand}">
+                Command="{Binding CreateNoteCommand}">
 
         </Button>
     </Grid>
