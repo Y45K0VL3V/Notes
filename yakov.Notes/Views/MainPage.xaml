@@ -21,7 +21,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollView Grid.Row="0">
+        <ScrollView Grid.Row="0" Scrolled="ScrollView_Scrolled">
 
             <CollectionView x:Name="CollectionView"
                             ItemsSource="{Binding DisplayNoteItems}"
@@ -90,7 +90,7 @@
 
         <sho:TabHostView Grid.Row="0" WidthRequest="250"
                          MinimumWidthRequest="210"
-                  HeightRequest="60"
+                  HeightRequest="50"
                   Margin="0,20"
                   Padding="20,0"
                   HorizontalOptions="Center"
@@ -110,5 +110,18 @@
                             LabelSize="16"
                              />
         </sho:TabHostView>
+
+        <Button x:Name="addButton"
+                IsVisible="true"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Margin="0,0,20,20"
+                CornerRadius="75"
+                HeightRequest="50"
+                WidthRequest="50"
+                ImageSource="note_add_button.svg"
+                Command="{Binding OpenNoteEditorCommand}">
+
+        </Button>
     </Grid>
 </ContentPage>

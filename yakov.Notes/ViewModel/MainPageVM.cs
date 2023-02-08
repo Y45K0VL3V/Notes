@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using yakov.Notes.Domain.Entities;
 
@@ -20,6 +21,23 @@ namespace yakov.Notes.ViewModel
         private int _currentIndex;
 
         [ObservableProperty]
-        private ObservableCollection<Note> _noteItems = new();
+        private ObservableCollection<Note> _displayNoteItems = new();
+
+        [RelayCommand]
+        private void CreateNote()
+        {
+
+        }
+
+        [RelayCommand]
+        private void OpenNote()
+        {
+
+        }
+
+        private void OpenNoteEditor()
+        {
+
+        }
     }
 }
