@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls.Internals;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,7 +20,6 @@ namespace yakov.Notes.Navigation
 
         private readonly IServiceProvider _services;
 
-        private INavigation _navigation;
         private INavigation Navigation
         {
             get => Application.Current?.MainPage?.Navigation;
@@ -32,12 +32,19 @@ namespace yakov.Notes.Navigation
         {
             await NavigateToPage<MainPage>();
 
-            Application.Current.MainPage = ResolvePage<MainPage>();
+            var pagesToRemove = Navigation.NavigationStack.Where(p => p is not MainPage).ToList();
+            for (int i = 0; i < pagesToRemove.Count(); i++)
+                Navigation.RemovePage(pagesToRemove[i]);
         }
 
-        public Task NavigateToNotePage(Note note)
+        public async Task NavigateToNotePage(Note note = null)
         {
-            throw new NotImplementedException();
+            if (note is null)
+            {
+                await NavigateToPage<NoteEditorPage>();
+            }
+            else
+                throw new NotImplementedException();
         }
 
         public Task NavigateBack()

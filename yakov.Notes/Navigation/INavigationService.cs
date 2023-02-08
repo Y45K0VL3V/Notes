@@ -12,7 +12,7 @@ namespace yakov.Notes.Navigation
         Task NavigateToLoginPage();
         Task NavigateToRegisterPage();
         Task NavigateToMainPage();
-        Task NavigateToNotePage(Note note);
+        Task NavigateToNotePage(Note note = null);
 
         Task NavigateBack();
     }
