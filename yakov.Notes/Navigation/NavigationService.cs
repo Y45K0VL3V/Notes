@@ -45,7 +45,7 @@ namespace yakov.Notes.Navigation
                 await NavigateToPage<NoteEditorPage>();
             }
             else
-                throw new NotImplementedException();
+                await NavigateToPage<NoteEditorPage>(note);
         }
 
         public Task NavigateBack()
