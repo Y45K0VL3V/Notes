@@ -5,7 +5,7 @@ using yakov.Notes.Navigation;
 
 namespace yakov.Notes.ViewModel
 {
-    public partial class RegisterPageVM : ObservableObject
+    public partial class RegisterPageVM : BaseVM
     {
         public RegisterPageVM(IAuthService authService, INavigationService navigationService)
         {

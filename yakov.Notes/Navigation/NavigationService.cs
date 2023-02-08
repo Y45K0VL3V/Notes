@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using yakov.Notes.Domain.Entities;
+using yakov.Notes.ViewModel;
 using yakov.Notes.Views;
 
 namespace yakov.Notes.Navigation
@@ -63,6 +64,26 @@ namespace yakov.Notes.Navigation
 
             throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
         }
+
+        private async Task NavigateToPage<T>(object parameter = null) where T : Page
+        {
+            var destPage = ResolvePage<T>();
+
+            if (destPage is not null)
+            {
+                var toViewModel = GetPageViewModelBase(destPage);
+
+                if (toViewModel is not null)
+                    await toViewModel.OnNavigatingTo(parameter);
+
+                await Navigation.PushAsync(destPage, true);
+            }
+            else
+                throw new InvalidOperationException($"Unable to resolve type {typeof(T).FullName}");
+        }
+
+        private BaseVM GetPageViewModelBase(Page p) => p?.BindingContext as BaseVM;
+
         private T ResolvePage<T>() where T : Page
             => _services.GetService<T>();
 

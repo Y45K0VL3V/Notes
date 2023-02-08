@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace yakov.Notes.ViewModel
 {
-    public partial class NoteEditorPageVM : ObservableObject
+    public partial class NoteEditorPageVM : BaseVM
     {
-        
+        public override Task OnNavigatingTo(object parameter)
+        {
+            
+            return base.OnNavigatingTo(parameter);
+        }
     }
 }
