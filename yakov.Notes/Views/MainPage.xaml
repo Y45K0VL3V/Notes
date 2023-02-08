@@ -4,39 +4,57 @@
              xmlns:vm="clr-namespace:yakov.Notes.ViewModel"
              xmlns:sho="http://sharpnado.com"
              xmlns:models="clr-namespace:yakov.Notes.Domain.Entities;assembly=yakov.Notes.Domain"
+             xmlns:converters="clr-namespace:yakov.Notes.Resources.Styles.Converters"
              x:DataType="vm:MainPageVM"
              x:Class="yakov.Notes.Views.MainPage"
              NavigationPage.HasNavigationBar="False"
              Shell.NavBarIsVisible="False"
              Background="Black">
 
-    <ScrollView>
-        <sho:CollectionView x:Name="CollectionView"
-                            CollectionPadding="0,20,0,50"
-                            ItemSpacing="25"
-                            CurrentIndex="{Binding CurrentIndex}"
-                            EnableDragAndDrop="True"
-                            ItemHeight="210"
-                            ItemWidth="96"
-                            ItemsSource="{Binding NoteItems}"
-                            CollectionLayout="Grid"
-                            Background="Transparent">
+    <ContentPage.Resources>
+        <converters:DateTimeToShortDateConverter x:Key="DateTimeConverter"/>
+    </ContentPage.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-            <sho:CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:Note">
-                    <sho:DraggableViewCell x:Name="DraggableViewCell">
-                        <Grid Margin="0,0,0,100">
+        <ScrollView Grid.Row="0">
+
+            <CollectionView x:Name="CollectionView"
+                            ItemsSource="{Binding DisplayNoteItems}"
+                            Background="Transparent"
+                            Margin="15,25,15,75">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="3"
+                                     HorizontalItemSpacing="15"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Note">
+                        <Grid Margin="0,0,0,0"
+                              HeightRequest="245">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="135"/>
-                                <RowDefinition Height="75"/>
+                                <RowDefinition Height="155"/>
+                                <RowDefinition Height="90"/>
                             </Grid.RowDefinitions>
                             <Border Background="#171717"
-                                    Padding="10,0,15,0"
-                                    HeightRequest="135"
+                                    Grid.Row="0"
+                                    Padding="10,2,15,0"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand"
                                     StrokeThickness="0">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
+                                    <RoundRectangle CornerRadius="15"/>
                                 </Border.StrokeShape>
+                                <Border.Shadow>
+                                    <Shadow Brush="{StaticResource Primary}"
+                                            Offset="0,10"
+                                            Opacity="0.5"/>
+                                </Border.Shadow>
                                 <Grid>
                                     <Editor Text="{Binding Content}" TextColor="White"
                                             IsReadOnly="True" 
@@ -47,16 +65,17 @@
                                 </Grid>
                             </Border>
 
-                            <StackLayout Grid.Row="1"
+                            <StackLayout Grid.Row="1" 
                                          Background="Transparent"
-                                         Margin="0,5,0,0">
+                                         Padding="0,15,0,0">
                                 <Label Text="{Binding Title}"
                                        HorizontalTextAlignment="Center"
                                        TextColor="White"
+                                       FontSize="16"
                                        FontAttributes="Bold"
                                        MaxLines="2">
                                 </Label>
-                                <Label Text="{Binding LastTimeModified}"
+                                <Label Text="{Binding LastTimeModified, Converter={StaticResource DateTimeConverter}}"
                                        HorizontalTextAlignment="Center"
                                        TextColor="#AEAEAE"
                                        FontSize="12"
@@ -64,11 +83,32 @@
                             </StackLayout>
 
                         </Grid>
-                    </sho:DraggableViewCell>
-                </DataTemplate>
-            </sho:CollectionView.ItemTemplate>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
 
-        </sho:CollectionView>
-    </ScrollView>
-
+        <sho:TabHostView Grid.Row="0" WidthRequest="250"
+                         MinimumWidthRequest="210"
+                  HeightRequest="60"
+                  Margin="0,20"
+                  Padding="20,0"
+                  HorizontalOptions="Center"
+                  VerticalOptions="End"
+                  BackgroundColor="#171717"
+                  SegmentedOutlineColor="#3E8EED"
+                  CornerRadius="15"
+                  IsSegmented="True"
+                  Orientation="Horizontal"
+                  TabType="Fixed">
+            <sho:UnderlinedTabItem
+                            Label="My notes"
+                            LabelSize="16"
+                            />
+            <sho:UnderlinedTabItem 
+                            Label="Shared"
+                            LabelSize="16"
+                             />
+        </sho:TabHostView>
+    </Grid>
 </ContentPage>
