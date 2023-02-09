@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using yakov.Notes.Domain.Entities;
 using yakov.Notes.Domain.Interfaces;
 
-namespace yakov.Notes.Services.LocalDB
+namespace yakov.Notes.Application.LocalDB
 {
     public class NotesRepositoryControl : INotesRepositoryControl
     {

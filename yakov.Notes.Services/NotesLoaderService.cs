@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using yakov.Notes.Domain.Entities;
 using yakov.Notes.Domain.Interfaces;
 
 namespace yakov.Notes.Services
@@ -34,6 +35,26 @@ namespace yakov.Notes.Services
             {
                 await _localDB.AddNote(note);
             }
+        }
+
+        public Task<List<Note>> GetLocalNotes() => _localDB.GetNotes(string.Empty);
+
+        public async Task DeleteNote(Guid noteGuid)
+        {
+            await _localDB.DeleteNote(noteGuid);
+            await _remoteDB.DeleteNote(noteGuid);
+        }
+
+        public async Task AddNote(Note note)
+        {
+            await _localDB.AddNote(note);
+            await _remoteDB.AddNote(note);
+        }
+
+        public async Task UpdateNote(Note note)
+        {
+            await _localDB.UpdateNote(note);
+            await _remoteDB.UpdateNote(note);
         }
     }
 }

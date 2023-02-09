@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace yakov.Notes.Services.RemoteDB
+namespace yakov.Notes.Application.RemoteDB
 {
     internal class FirebaseDBSettings
     {

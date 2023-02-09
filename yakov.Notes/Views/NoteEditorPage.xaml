@@ -53,7 +53,7 @@
                         HeightRequest="50"
                         WidthRequest="50"
                         ImageSource="share_button.svg"
-                        Command="SwitchShareModeCommand"/>
+                        Command="{Binding SwitchShareModeCommand}"/>
 
                 <Label Text="{Binding Path=CreatedTime, TargetNullValue=19:58}"
                        TextColor="#AEAEAE"

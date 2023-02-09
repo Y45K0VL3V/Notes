@@ -2,6 +2,8 @@
 using Sharpnado.CollectionView;
 using Sharpnado.Tabs;
 using yakov.Notes.Domain.Interfaces;
+using yakov.Notes.Application.RemoteDB;
+using yakov.Notes.Application.LocalDB;
 using yakov.Notes.Navigation;
 using yakov.Notes.Services;
 using yakov.Notes.ViewModel;
@@ -35,6 +37,10 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<IAuthService, FirebaseAuthService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
+        builder.Services.AddSingleton<INotesRemoteRepositoryControl, FirebaseDBControl>();
+        builder.Services.AddSingleton<INotesRepositoryControl, NotesRepositoryControl>();
+        builder.Services.AddSingleton<INotesLoaderService, NotesLoaderService>();
+		
 
         return builder.Build();
 	}

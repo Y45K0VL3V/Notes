@@ -6,11 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using yakov.Notes.Domain.Entities;
+using yakov.Notes.Domain.Interfaces;
 
 namespace yakov.Notes.ViewModel
 {
     public partial class NoteEditorPageVM : BaseVM
     {
+        public NoteEditorPageVM(INotesLoaderService notesLoader)
+        {
+            _notesLoader = notesLoader;
+        }
+
+        private INotesLoaderService _notesLoader;
+
         private Note _existingNote;
         private void SetExistingNote(Note note)
         {
@@ -50,12 +58,15 @@ namespace yakov.Notes.ViewModel
                     LastTimeModified = DateTime.Now,
                     CreatorEmail = email,
                 };
+
+                await _notesLoader.AddNote(note);
             }
             else
             {
                 note.Title = NoteTitle;
                 note.Content = NoteContent;
                 note.IsShared = IsShared;
+                await _notesLoader.UpdateNote(note);
             }
 
         }

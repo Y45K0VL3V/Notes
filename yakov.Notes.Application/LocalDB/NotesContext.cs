@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using yakov.Notes.Domain.Entities;
 
-namespace yakov.Notes.Services.LocalDB
+namespace yakov.Notes.Application.LocalDB
 {
     public class NotesContext : DbContext
     {

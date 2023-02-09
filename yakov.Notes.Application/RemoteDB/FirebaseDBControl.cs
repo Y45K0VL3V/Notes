@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using yakov.Notes.Domain.Entities;
 using yakov.Notes.Domain.Interfaces;
 
-namespace yakov.Notes.Services.RemoteDB
+namespace yakov.Notes.Application.RemoteDB
 {
     public class FirebaseDBControl : INotesRemoteRepositoryControl
     {
