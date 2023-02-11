@@ -36,7 +36,7 @@ namespace yakov.Notes.Application.RemoteDB
         {
             return (await _client.Child(nameof(Note)).OnceAsync<Note>()).Select(n => new Note()
             {
-                Guid = Guid.Parse(n.Key),
+                Guid = n.Object.Guid,
                 CreatorEmail = n.Object.CreatorEmail,
                 Title = n.Object.Title,
                 Content = n.Object.Content,

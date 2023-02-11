@@ -13,7 +13,7 @@ namespace yakov.Notes.Application.LocalDB
 {
     public class NotesRepositoryControl : INotesRepositoryControl
     {
-        private NotesContext _context;
+        private readonly NotesContext _context;
         public NotesRepositoryControl(NotesContext context)
         {
             _context = context;
