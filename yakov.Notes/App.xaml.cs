@@ -3,7 +3,7 @@ using yakov.Notes.Views;
 
 namespace yakov.Notes;
 
-public partial class App : Application
+public partial class App : Microsoft.Maui.Controls.Application
 {
 	public App(INavigationService navigationService)
 	{

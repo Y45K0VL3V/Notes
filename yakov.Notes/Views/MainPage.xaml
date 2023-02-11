@@ -102,12 +102,18 @@
                   TabType="Fixed">
             <sho:UnderlinedTabItem
                             Label="My notes"
-                            LabelSize="16"
-                            />
+                            LabelSize="16">
+                <sho:UnderlinedTabItem.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowPrivateNotesCommand}"/>
+                </sho:UnderlinedTabItem.GestureRecognizers>
+            </sho:UnderlinedTabItem>
             <sho:UnderlinedTabItem 
                             Label="Shared"
-                            LabelSize="16"
-                             />
+                            LabelSize="16">
+                <sho:UnderlinedTabItem.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowSharedNotesCommand}"/>
+                </sho:UnderlinedTabItem.GestureRecognizers>
+            </sho:UnderlinedTabItem>
         </sho:TabHostView>
 
         <Button x:Name="addButton"

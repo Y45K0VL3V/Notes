@@ -23,7 +23,7 @@ namespace yakov.Notes.Navigation
 
         private INavigation Navigation
         {
-            get => Application.Current?.MainPage?.Navigation;
+            get => Microsoft.Maui.Controls.Application.Current?.MainPage?.Navigation;
         }
 
         public Task NavigateToLoginPage() => NavigateToPage<LoginPage>();
