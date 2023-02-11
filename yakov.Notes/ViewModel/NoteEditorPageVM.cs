@@ -7,16 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 using yakov.Notes.Domain.Entities;
 using yakov.Notes.Domain.Interfaces;
+using yakov.Notes.Navigation;
 
 namespace yakov.Notes.ViewModel
 {
     public partial class NoteEditorPageVM : BaseVM
     {
-        public NoteEditorPageVM(INotesLoaderService notesLoader)
+        public NoteEditorPageVM(INotesLoaderService notesLoader, INavigationService navigationService)
         {
             _notesLoader = notesLoader;
+            _navigationService = navigationService;
         }
 
+        private INavigationService _navigationService;
         private INotesLoaderService _notesLoader;
 
         private Note _existingNote;
@@ -37,7 +40,13 @@ namespace yakov.Notes.ViewModel
         [ObservableProperty]
         private bool _isShared = false;
         [ObservableProperty]
-        private string _createdTime;
+        private string _createdTime = DateTime.Now.ToShortDateString();
+
+        [RelayCommand]
+        private void SwitchShareMode()
+        {
+            IsShared = !IsShared;
+        }
 
         [RelayCommand]
         private async Task SaveNote()
@@ -66,9 +75,11 @@ namespace yakov.Notes.ViewModel
                 note.Title = NoteTitle;
                 note.Content = NoteContent;
                 note.IsShared = IsShared;
+                note.LastTimeModified = DateTime.Now;
                 await _notesLoader.UpdateNote(note);
             }
 
+            await _navigationService.NavigateBack();
         }
 
         public override Task OnNavigatingTo(object parameter)

@@ -12,7 +12,7 @@ namespace yakov.Notes.Resources.Styles.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool isEnabled = (bool)value;
-            return isEnabled ? new SolidColorBrush(Color.FromRgba("#FF404040")) : new SolidColorBrush(Color.FromRgba("#FF3E8EED"));
+            return isEnabled ? new SolidColorBrush(Color.FromArgb("#FF404040")) : new SolidColorBrush(Color.FromArgb("#FF3E8EED"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

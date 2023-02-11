@@ -1,11 +1,9 @@
-﻿using Kotlin.Jvm.Functions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Android.Provider.Telephony;
 
 namespace yakov.Notes.Resources.Styles.Converters
 {
