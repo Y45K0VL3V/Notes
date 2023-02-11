@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using yakov.Notes.Domain.Comparers;
 using yakov.Notes.Domain.Entities;
 using yakov.Notes.Domain.Interfaces;
 
@@ -24,17 +25,21 @@ namespace yakov.Notes.Services
             var localNotes = await _localDB.GetNotes(string.Empty);
             var remoteNotes = await _remoteDB.GetAllNotes();
 
-            var notesToAdd = localNotes.Except(remoteNotes);
-            foreach (var note in notesToAdd)
-            {
-                await _remoteDB.AddNote(note);
-            }
+            var notesToAdd = localNotes.Except(remoteNotes, new NoteComparer());
+          
+            if (notesToAdd is not null)
+                foreach (var note in notesToAdd)
+                {
+                    await _remoteDB.AddNote(note);
+                }
 
-            notesToAdd = remoteNotes.Except(localNotes);
-            foreach (var note in notesToAdd)
-            {
-                await _localDB.AddNote(note);
-            }
+            notesToAdd = remoteNotes.Except(localNotes, new NoteComparer());
+
+            if (notesToAdd is not null)
+                foreach (var note in notesToAdd)
+                {
+                    await _localDB.AddNote(note);
+                }
         }
 
         public Task<List<Note>> GetLocalNotes() => _localDB.GetNotes(string.Empty);

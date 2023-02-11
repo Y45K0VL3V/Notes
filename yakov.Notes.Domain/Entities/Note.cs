@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace yakov.Notes.Domain.Entities
 {
     public class Note
     {
+        [Key]
         public Guid Guid { get; set; } = new Guid();
         public string CreatorEmail { get; set; }
         public string Title { get; set; }
