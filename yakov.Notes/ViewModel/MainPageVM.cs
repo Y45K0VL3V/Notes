@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using yakov.Notes.Application.LocalDB;
+using yakov.Notes.Domain.Comparers;
 using yakov.Notes.Domain.Entities;
 using yakov.Notes.Domain.Interfaces;
 using yakov.Notes.Navigation;
@@ -16,93 +18,106 @@ namespace yakov.Notes.ViewModel
             _navigationService = navigationService;
             _notesLoader = notesLoader;
 
-            RefreshNotes();
+            InitPage();
         }
 
         private INavigationService _navigationService;
         private INotesLoaderService _notesLoader;
 
+        private async void InitPage()
+        {
+            await RefreshNotes();
+            await ShowPrivateNotes();
+        }
+
         [ObservableProperty]
         private int _currentIndex;
 
-        private ObservableCollection<Note> _availableNotes = new();
+        private ConcurrentDictionary<Guid, Note> _availableNotes = new();
 
         [ObservableProperty]
         private ObservableCollection<Note> _displayNoteItems = new();
-        
-        private async void RefreshNotes()
-        {
-            await _notesLoader.SyncWithRemote();
 
-            _availableNotes.Clear();
-            (await _notesLoader.GetLocalNotes()).ForEach(n => _availableNotes.Add(n));
+        private int _isRefreshing = 0;
+        private async Task RefreshNotes()
+        {
+            if (Interlocked.Exchange(ref _isRefreshing, 1) == 1)
+                return;
+
+            await _notesLoader.SyncWithRemote();
+            var localNotes = await _notesLoader.GetLocalNotes();
+            
+            foreach (var note in localNotes)
+                _availableNotes.TryAdd(note.Guid, note);
+
+            foreach (var note in _availableNotes.Values.Except(localNotes, new NoteComparer()))
+                _availableNotes.TryRemove(note.Guid, out _);
+
+            Interlocked.Exchange(ref _isRefreshing, 0);
         }
 
         [RelayCommand]
-        private void ShowPrivateNotes() => ShowNotesGroup(NoteGroupType.Private);
+        private async Task ShowPrivateNotes()
+        {
+            await ShowNotesGroup(NoteGroupType.Private);
+        }
 
         [RelayCommand]
-        private void ShowSharedNotes() => ShowNotesGroup(NoteGroupType.Shared);
-
+        private async Task ShowSharedNotes()
+        {
+            await ShowNotesGroup(NoteGroupType.Shared);
+        }
+        
         private CancellationTokenSource _loadNotesCancellationToken = new();
 
-        //private void ShowNotesGroup(NoteGroupType noteGroup)
-        //{
-        //    _loadNotesCancellationToken.Cancel();
-        //    DisplayNoteItems.Clear();
-
-        //    _loadNotesCancellationToken = new();
-
-        //    switch (noteGroup)
-        //    {
-        //        case NoteGroupType.Private:
-        //            LoadNotesToDisplay(_loadNotesCancellationToken.Token, _availableNotes.Where(n => !n.IsShared));
-        //            break;
-
-        //        case NoteGroupType.Shared:
-        //            LoadNotesToDisplay(_loadNotesCancellationToken.Token, _availableNotes.Where(n => n.IsShared));
-        //            break;
-        //    }
-        //}
-        private void ShowNotesGroup(NoteGroupType noteGroup)
+        private readonly object _tokenLocker = new();
+        private async Task ShowNotesGroup(NoteGroupType noteGroup)
         {
-            _loadNotesCancellationToken.Cancel();
-            DisplayNoteItems.Clear();
-
-            _loadNotesCancellationToken = new();
-
-            IEnumerable<Note> notes;
-            switch (noteGroup)
+            lock (_tokenLocker)
             {
-                case NoteGroupType.Private:
-                    notes = _availableNotes.Where(n => !n.IsShared);
-                    break;
-                case NoteGroupType.Shared:
-                    notes = _availableNotes.Where(n => n.IsShared);
-                    break;
-                default:
-                    notes = Enumerable.Empty<Note>();
-                    break;
+                _loadNotesCancellationToken.Cancel();
+                _loadNotesCancellationToken = new();
             }
 
-            LoadNotesToDisplay(_loadNotesCancellationToken.Token, notes);
+            await Task.Run( async () =>
+            {
+                await RefreshNotes();
+
+                IEnumerable<Note> notes;
+                switch (noteGroup)
+                {
+                    case NoteGroupType.Private:
+                        notes = _availableNotes.Values.Where(n => !n.IsShared);
+                        break;
+                    case NoteGroupType.Shared:
+                        notes = _availableNotes.Values.Where(n => n.IsShared);
+                        break;
+                    default:
+                        notes = Enumerable.Empty<Note>();
+                        break;
+                }
+
+                await LoadNotesToDisplay(_loadNotesCancellationToken.Token, notes);
+
+            }, _loadNotesCancellationToken.Token);
         }
 
-        private async void LoadNotesToDisplay(CancellationToken token, IEnumerable<Note> notes)
+        private readonly object _notesLock = new object();
+        private async Task LoadNotesToDisplay(CancellationToken token, IEnumerable<Note> notes)
         {
             await Task.Run(() =>
             {
-                foreach (var currNote in notes)
+                lock (_notesLock)
                 {
-                    if (token.IsCancellationRequested)
-                        return;
+                    DisplayNoteItems.Clear();
 
-                    DisplayNoteItems.Add(currNote);
+                    foreach (var currNote in notes)
+                    {
+                        DisplayNoteItems.Add(currNote);
+                    }
                 }
-            });
+            }, token);
         }
-
-
 
         [RelayCommand]
         private async void CreateNote()
