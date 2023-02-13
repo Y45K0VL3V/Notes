@@ -45,6 +45,7 @@ namespace yakov.Notes.Application.LocalDB
             if (noteToUpdate is null) return null;
 
             noteToUpdate = note;
+            await _context.SaveChangesAsync();
             return noteToUpdate;
         }
 
