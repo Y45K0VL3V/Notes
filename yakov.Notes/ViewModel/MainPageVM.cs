@@ -30,8 +30,6 @@ namespace yakov.Notes.ViewModel
             await ShowPrivateNotes();
         }
 
-        [ObservableProperty]
-        private int _currentIndex;
 
         private ConcurrentDictionary<Guid, Note> _availableNotes = new();
 
@@ -119,16 +117,20 @@ namespace yakov.Notes.ViewModel
             }, token);
         }
 
+
         [RelayCommand]
         private async void CreateNote()
         {
             await _navigationService.NavigateToNotePage(null);
         }
 
+        [ObservableProperty]
+        private Note _noteToOpen;
+
         [RelayCommand]
-        private void OpenNote()
+        private async void OpenNote()
         {
-            
+            await _navigationService.NavigateToNotePage(NoteToOpen);
         }
     }
 }

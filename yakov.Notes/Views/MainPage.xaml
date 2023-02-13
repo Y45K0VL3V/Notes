@@ -22,8 +22,11 @@
 
         <ScrollView Grid.Row="0" Scrolled="ScrollView_Scrolled">
 
-            <CollectionView x:Name="CollectionView"
+            <CollectionView x:Name="collectionView"
                             ItemsSource="{Binding DisplayNoteItems}"
+                            SelectionMode="Single"
+                            SelectedItem="{Binding NoteToOpen}"
+                            SelectionChangedCommand="{Binding OpenNoteCommand}"
                             Background="Transparent"
                             Margin="15,25,15,75">
                 <CollectionView.ItemsLayout>
@@ -42,7 +45,7 @@
                             </Grid.RowDefinitions>
                             <Border Background="#171717"
                                     Grid.Row="0"
-                                    Padding="10,2,15,0"
+                                    Padding="10,8,15,8"
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="FillAndExpand"
                                     StrokeThickness="0">
@@ -55,12 +58,10 @@
                                             Opacity="0.5"/>
                                 </Border.Shadow>
                                 <Grid>
-                                    <Editor Text="{Binding Content}" TextColor="White"
-                                            IsReadOnly="True" 
-                                            IsSpellCheckEnabled="false"
+                                    <Label Text="{Binding Content}" TextColor="White"
                                             VerticalOptions="Fill"
-                                            VerticalTextAlignment="End"
-                                            HorizontalOptions="Fill" AutoSize="TextChanges"/>
+                                            VerticalTextAlignment="Start"
+                                            HorizontalOptions="Fill" />
                                 </Grid>
                             </Border>
 
@@ -80,6 +81,18 @@
                                        FontSize="12"
                                        MaxLines="1"/>
                             </StackLayout>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState Name="Normal" />
+                                    <VisualState Name="Selected">
+                                        <VisualState.Setters>
+                                            <Setter Property="BackgroundColor" Value="Transparent" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
 
                         </Grid>
                     </DataTemplate>

@@ -19,7 +19,8 @@ namespace yakov.Notes.Application.RemoteDB
 
         public async Task AddNote(Note note)
         {
-            await _client.Child(nameof(Note)).PostAsync(note);
+            //await _client.Child(nameof(Note)).PostAsync(note);
+            await _client.Child(nameof(Note)).Child(note.Guid.ToString()).PutAsync(note);
         }
 
         public async Task DeleteNote(Guid noteGuid)
