@@ -9,7 +9,17 @@ public partial class App : Microsoft.Maui.Controls.Application
 	{
 		InitializeComponent();
 
-		Current.MainPage = new NavigationPage();
-		navigationService.NavigateToLoginPage();
+		var emailTask = SecureStorage.GetAsync("yakovNotesEmail");
+		emailTask.Wait();
+
+        Current.MainPage = new NavigationPage();
+        if (emailTask.Result is null)
+		{
+			navigationService.NavigateToLoginPage();
+		}
+		else
+		{
+			navigationService.NavigateToMainPage();
+		}
     }
 }

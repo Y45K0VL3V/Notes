@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using yakov.Notes.Application.LocalDB;
@@ -23,9 +24,11 @@ namespace yakov.Notes.ViewModel
 
         private INavigationService _navigationService;
         private INotesLoaderService _notesLoader;
+        private string _authEmail;
 
         private async void InitPage()
         {
+            _authEmail = await SecureStorage.GetAsync("yakovNotesEmail");
             await RefreshNotes();
             await ShowPrivateNotes();
         }
@@ -43,7 +46,7 @@ namespace yakov.Notes.ViewModel
                 return;
 
             await _notesLoader.SyncWithRemote();
-            var localNotes = await _notesLoader.GetLocalNotes();
+            var localNotes = await _notesLoader.GetLocalNotes(_authEmail);
             
             foreach (var note in localNotes)
                 _availableNotes.TryAdd(note.Guid, note);

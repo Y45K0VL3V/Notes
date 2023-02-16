@@ -20,46 +20,68 @@ namespace yakov.Notes.Services
         private INotesRepositoryControl _localDB;
         private INotesRemoteRepositoryControl _remoteDB;
 
+        ////TODO: Check if try works faster than NetworkAccess
         public async Task SyncWithRemote()
         {
-            var localNotes = await _localDB.GetNotes(string.Empty);
-            var remoteNotes = await _remoteDB.GetAllNotes();
+            try
+            {
+                var localNotes = await _localDB.GetNotes(string.Empty);
 
-            var notesToAdd = localNotes.Except(remoteNotes, new NoteComparer());
+                var remoteNotes = await _remoteDB.GetAllNotes();
+
+                var notesToAdd = localNotes.Except(remoteNotes, new NoteComparer());
           
-            if (notesToAdd is not null)
-                foreach (var note in notesToAdd)
-                {
-                    await _remoteDB.AddNote(note);
-                }
+                if (notesToAdd is not null)
+                    foreach (var note in notesToAdd)
+                    {
+                        await _remoteDB.AddNote(note);
+                    }
 
-            notesToAdd = remoteNotes.Except(localNotes, new NoteComparer());
+                notesToAdd = remoteNotes.Except(localNotes, new NoteComparer());
 
-            if (notesToAdd is not null)
-                foreach (var note in notesToAdd)
-                {
-                    await _localDB.AddNote(note);
-                }
+                if (notesToAdd is not null)
+                    foreach (var note in notesToAdd)
+                    {
+                        await _localDB.AddNote(note);
+                    }
+            }
+            catch { }
         }
 
-        public Task<List<Note>> GetLocalNotes() => _localDB.GetNotes(string.Empty);
+        public async Task<List<Note>> GetLocalNotes(string authEmail)
+        {
+            var localNotes = await _localDB.GetNotes(string.Empty);
+            return localNotes.Where(n => (n.CreatorEmail == authEmail) || n.IsShared).ToList();
+        }
 
         public async Task DeleteNote(Guid noteGuid)
         {
             await _localDB.DeleteNote(noteGuid);
-            await _remoteDB.DeleteNote(noteGuid);
+            try
+            {
+                await _remoteDB.DeleteNote(noteGuid);
+            }
+            catch { }
         }
 
         public async Task AddNote(Note note)
         {
             await _localDB.AddNote(note);
-            await _remoteDB.AddNote(note);
+            try
+            {
+                await _remoteDB.AddNote(note);
+            }
+            catch { }
         }
 
         public async Task UpdateNote(Note note)
         {
             await _localDB.UpdateNote(note);
-            await _remoteDB.UpdateNote(note);
+            try
+            {
+                await _remoteDB.UpdateNote(note);
+            }
+            catch { }
         }
     }
 }

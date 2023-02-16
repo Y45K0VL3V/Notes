@@ -28,8 +28,8 @@ namespace yakov.Notes.ViewModel
             try
             {
                 var authConnection = await _authService.SignInAsync(_userEmail, _userPassword);
-                Preferences.Set("FreshFirebaseToken", authConnection);
-                Preferences.Set("Email", _userEmail);
+                await SecureStorage.SetAsync("yakovNotesFreshFirebaseToken", authConnection);
+                await SecureStorage.SetAsync("yakovNotesEmail", _userEmail);
 
                 await _navigationService.NavigateToMainPage();
             }

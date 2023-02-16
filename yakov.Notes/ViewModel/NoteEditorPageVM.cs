@@ -54,7 +54,8 @@ namespace yakov.Notes.ViewModel
             Note note = _existingNote;
             if (note is null)
             {
-                string email = Preferences.Get("Email", null);
+                string email = await SecureStorage.GetAsync("yakovNotesEmail");
+
                 if (email is null)
                     await App.Current.MainPage.DisplayAlert("Alert", "Email not provided", "OK");
 

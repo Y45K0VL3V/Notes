@@ -53,6 +53,7 @@
                         HeightRequest="50"
                         WidthRequest="50"
                         ImageSource="share_button.svg"
+                        IsVisible="{Binding IsShared}"
                         Command="{Binding SwitchShareModeCommand}"/>
 
                 <Label Text="{Binding Path=CreatedTime, TargetNullValue=19:58}"
