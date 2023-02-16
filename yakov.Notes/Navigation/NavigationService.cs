@@ -26,7 +26,14 @@ namespace yakov.Notes.Navigation
             get => Microsoft.Maui.Controls.Application.Current?.MainPage?.Navigation;
         }
 
-        public Task NavigateToLoginPage() => NavigateToPage<LoginPage>();
+        public async Task NavigateToLoginPage()
+        {
+            await NavigateToPage<LoginPage>();
+
+            var pagesToRemove = Navigation.NavigationStack.Where(p => p is not LoginPage).ToList();
+            for (int i = 0; i < pagesToRemove.Count(); i++)
+                Navigation.RemovePage(pagesToRemove[i]);
+        }
 
         public Task NavigateToRegisterPage() => NavigateToPage<RegisterPage>();
         public async Task NavigateToMainPage()

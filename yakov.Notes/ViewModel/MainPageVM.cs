@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Android.OS;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Collections.Concurrent;
@@ -28,11 +29,17 @@ namespace yakov.Notes.ViewModel
 
         private async void InitPage()
         {
+            Connectivity.ConnectivityChanged += OnNetworkAccessChanged;
+
             _authEmail = await SecureStorage.GetAsync("yakovNotesEmail");
             await RefreshNotes();
             await ShowPrivateNotes();
         }
 
+        private void OnNetworkAccessChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            NetworkAccess = Connectivity.Current.NetworkAccess;
+        }
 
         private ConcurrentDictionary<Guid, Note> _availableNotes = new();
 
@@ -134,6 +141,17 @@ namespace yakov.Notes.ViewModel
         private async void OpenNote()
         {
             await _navigationService.NavigateToNotePage(NoteToOpen);
+        }
+
+        [ObservableProperty]
+        private NetworkAccess _networkAccess = Connectivity.Current.NetworkAccess;
+
+        [RelayCommand]
+        private async void LogOut()
+        {
+            await _navigationService.NavigateToLoginPage();
+            SecureStorage.Remove("yakovNotesEmail");
+            SecureStorage.Remove("yakovNotesFreshFirebaseToken");
         }
     }
 }

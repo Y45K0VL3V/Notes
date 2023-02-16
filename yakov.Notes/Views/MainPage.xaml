@@ -12,15 +12,48 @@
 
     <ContentPage.Resources>
         <converters:DateTimeToShortDateConverter x:Key="DateTimeConverter"/>
+        <converters:NetworkAccessToBoolConverter x:Key="NetworkAccessConverter"/>
     </ContentPage.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <ScrollView Grid.Row="0" Scrolled="ScrollView_Scrolled">
+        <Border Grid.Row="0"
+                Background="Black"
+                StrokeThickness="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                
+                <Entry Placeholder="Search"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       VerticalTextAlignment="Center"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       Margin="20,8,10,2">
+                    
+                </Entry>
+                <Button Grid.Column="1"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center" 
+                        WidthRequest="60"
+                        Text="Exit"
+                        Background="Transparent"
+                        BorderColor="{StaticResource Primary}" BorderWidth="1"
+                        Command="{Binding LogOutCommand}"
+                        IsEnabled="{Binding NetworkAccess, Converter={StaticResource NetworkAccessConverter}}">
+                    
+                </Button>
+            </Grid>
+        </Border>
+        
+        <ScrollView Grid.Row="1" Scrolled="ScrollView_Scrolled">
 
             <CollectionView x:Name="collectionView"
                             ItemsSource="{Binding DisplayNoteItems}"
@@ -100,7 +133,8 @@
             </CollectionView>
         </ScrollView>
 
-        <sho:TabHostView Grid.Row="0" WidthRequest="250"
+        <sho:TabHostView Grid.Row="1" 
+                         WidthRequest="250"
                          MinimumWidthRequest="210"
                   HeightRequest="50"
                   Margin="0,20"
@@ -131,6 +165,7 @@
         </sho:TabHostView>
 
         <Button x:Name="addButton"
+                Grid.Row="1"
                 IsVisible="true"
                 VerticalOptions="End"
                 HorizontalOptions="End"
