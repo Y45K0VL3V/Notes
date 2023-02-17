@@ -8,6 +8,7 @@
              Background="Black">
     <ContentPage.Resources>
         <converters:BoolToToggleBackgroundConverter x:Key="BoolToBackground"/>
+        <converters:IsCurrentCreatorConverter x:Key="CurrentCreatorConverter"/>
     </ContentPage.Resources>
     
     <Grid Padding="10">
@@ -53,8 +54,9 @@
                         HeightRequest="50"
                         WidthRequest="50"
                         ImageSource="share_button.svg"
-                        IsVisible="{Binding IsShared}"
-                        Command="{Binding SwitchShareModeCommand}"/>
+                        IsVisible="{Binding CreatorEmail, Converter={StaticResource CurrentCreatorConverter}}"
+                        Command="{Binding SwitchShareModeCommand}">
+                </Button>
 
                 <Label Text="{Binding Path=CreatedTime, TargetNullValue=19:58}"
                        TextColor="#AEAEAE"

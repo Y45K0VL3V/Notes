@@ -30,6 +30,7 @@ namespace yakov.Notes.ViewModel
             NoteTitle = note.Title;
             NoteContent = note.Content;
             IsShared = note.IsShared;
+            CreatorEmail = note.CreatorEmail;
             CreatedTime = note.CreatedTime.ToShortDateString();
         }
 
@@ -39,6 +40,8 @@ namespace yakov.Notes.ViewModel
         private string _noteContent;
         [ObservableProperty]
         private bool _isShared = false;
+        [ObservableProperty]
+        private string _creatorEmail = "";
         [ObservableProperty]
         private string _createdTime = DateTime.Now.ToShortDateString();
 
