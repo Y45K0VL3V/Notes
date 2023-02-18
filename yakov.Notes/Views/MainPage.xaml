@@ -36,7 +36,8 @@
                        VerticalTextAlignment="Center"
                        FontSize="20"
                        FontAttributes="Bold"
-                       Margin="20,5,10,5">
+                       Margin="20,5,10,5"
+                       Text="{Binding SearchText}">
                     
                 </Entry>
                 <Button Grid.Column="1"

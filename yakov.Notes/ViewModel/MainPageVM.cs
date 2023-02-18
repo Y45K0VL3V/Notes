@@ -77,15 +77,20 @@ namespace yakov.Notes.ViewModel
         }
         
         private CancellationTokenSource _loadNotesCancellationToken = new();
-
         private readonly object _tokenLocker = new();
-        private async Task ShowNotesGroup(NoteGroupType noteGroup)
+        private void ResetToken()
         {
             lock (_tokenLocker)
             {
                 _loadNotesCancellationToken.Cancel();
                 _loadNotesCancellationToken = new();
             }
+        }
+
+        private bool _isSharedDisplay = false;
+        private async Task ShowNotesGroup(NoteGroupType noteGroup)
+        {
+            ResetToken();
 
             await Task.Run( async () =>
             {
@@ -95,9 +100,11 @@ namespace yakov.Notes.ViewModel
                 switch (noteGroup)
                 {
                     case NoteGroupType.Private:
+                        _isSharedDisplay = false;
                         notes = _availableNotes.Values.Where(n => !n.IsShared);
                         break;
                     case NoteGroupType.Shared:
+                        _isSharedDisplay = true;
                         notes = _availableNotes.Values.Where(n => n.IsShared);
                         break;
                     default:
@@ -125,6 +132,22 @@ namespace yakov.Notes.ViewModel
                     }
                 }
             }, token);
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                SetProperty(ref _searchText, value);
+
+                var searchedNotes = _availableNotes.Values.Where(n => !(n.IsShared ^ _isSharedDisplay) && 
+                                                                (n.Title.Contains(value) || n.Content.Contains(value))).ToList();
+                ResetToken();
+                LoadNotesToDisplay(_loadNotesCancellationToken.Token, searchedNotes);
+
+            }
         }
 
 

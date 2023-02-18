@@ -90,6 +90,7 @@
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 Margin="0,20,0,0"
+                IsVisible="{Binding CreatorEmail, Converter={StaticResource CurrentCreatorConverter}}"
                 Command="{Binding SaveNoteCommand}"/>
 
     </Grid>

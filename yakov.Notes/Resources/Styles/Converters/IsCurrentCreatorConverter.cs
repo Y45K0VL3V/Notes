@@ -11,6 +11,9 @@ namespace yakov.Notes.Resources.Styles.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (string.IsNullOrEmpty(value.ToString()))
+                return true;
+
             var emailTask = SecureStorage.GetAsync("yakovNotesEmail");
             emailTask.Wait();
 
