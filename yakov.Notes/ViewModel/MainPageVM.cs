@@ -1,7 +1,7 @@
-﻿using Android.OS;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using yakov.Notes.Application.LocalDB;
@@ -112,6 +112,9 @@ namespace yakov.Notes.ViewModel
                         break;
                 }
 
+                if (!string.IsNullOrEmpty(SearchText))
+                    notes = GetSearchedNotes(notes, SearchText);
+
                 await LoadNotesToDisplay(_loadNotesCancellationToken.Token, notes);
 
             }, _loadNotesCancellationToken.Token);
@@ -142,14 +145,17 @@ namespace yakov.Notes.ViewModel
             {
                 SetProperty(ref _searchText, value);
 
-                var searchedNotes = _availableNotes.Values.Where(n => !(n.IsShared ^ _isSharedDisplay) && 
-                                                                (n.Title.Contains(value) || n.Content.Contains(value))).ToList();
+                var searchedNotes = GetSearchedNotes(_availableNotes.Values.Where(n => !(n.IsShared ^ _isSharedDisplay)), value);
                 ResetToken();
                 LoadNotesToDisplay(_loadNotesCancellationToken.Token, searchedNotes);
 
             }
         }
 
+        private List<Note> GetSearchedNotes(IEnumerable<Note> notes, string searchStr)
+        {
+            return notes.Where(n => n.Title.Contains(searchStr) || n.Content.Contains(searchStr)).ToList();
+        }
 
         [RelayCommand]
         private async void CreateNote()

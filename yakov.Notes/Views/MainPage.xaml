@@ -13,6 +13,7 @@
     <ContentPage.Resources>
         <converters:DateTimeToShortDateConverter x:Key="DateTimeConverter"/>
         <converters:NetworkAccessToBoolConverter x:Key="NetworkAccessConverter"/>
+        <converters:CurrentCreatorToBrushConverter x:Key="CurrentCreatorToBrushConverter"/>
     </ContentPage.Resources>
     
     <Grid>
@@ -77,8 +78,9 @@
                                 <RowDefinition Height="155"/>
                                 <RowDefinition Height="90"/>
                             </Grid.RowDefinitions>
-                            <Border Background="#171717"
-                                    Grid.Row="0"
+
+                            <Border Grid.Row="0" 
+                                    Background="#171717"
                                     Padding="10,8,15,8"
                                     HorizontalOptions="FillAndExpand"
                                     VerticalOptions="FillAndExpand"
@@ -87,7 +89,7 @@
                                     <RoundRectangle CornerRadius="15"/>
                                 </Border.StrokeShape>
                                 <Border.Shadow>
-                                    <Shadow Brush="{StaticResource Primary}"
+                                    <Shadow Brush="{Binding CreatorEmail, Converter={StaticResource CurrentCreatorToBrushConverter}}"
                                             Offset="0,10"
                                             Opacity="0.5"/>
                                 </Border.Shadow>
@@ -98,6 +100,7 @@
                                             HorizontalOptions="Fill" />
                                 </Grid>
                             </Border>
+                            
 
                             <StackLayout Grid.Row="1" 
                                          Background="Transparent"
